@@ -1,2 +1,4 @@
-obj/main.o dpnd/main.d : src/main.cpp src/Roller.h src/Rules.h \
-  src/assign_characteristic_scores.h src/read_in_preferences.h
+obj/./main.o dpnd/main.d : src/main.cpp src/skills/Repertoire.h src/skills/skill_type.h \
+  src/config/Rules.h src/score_assign/assign_characteristic_scores.h \
+  src/config/read_in_preferences.h \
+  src/background/pick_background_skills.h
