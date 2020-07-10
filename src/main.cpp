@@ -3,7 +3,6 @@
 //  Mongoose Traveller Command-Line Character Creator
 //
 //  Created by Charlotte on 6/6/20.
-//  Copyright © 2020 Charlotte. All rights reserved.
 //
 
 #include <array>
