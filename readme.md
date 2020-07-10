@@ -14,7 +14,7 @@ If GNU `make` is not available on your platform, your life just got a lot harder
 
 ## Usage
 
-If you're on a Unix-like OS, once you've built `cc`, just execute it with `./cc` from the terminal. No arguments or flags. Preferences are configurable in `pref.cfg`. Read the comments in that file for a full explanation of the role of each variable.
+If you're on a Unix-like OS, once you've built `traveller-cc`, just execute it with `./traveller-cc` from the terminal. No arguments or flags. Preferences are configurable in `pref.cfg`. Read the comments in that file for a full explanation of the role of each variable.
 
 If you're not on a Unix-like, you presumably still generated an executable during the build process you came up with. Run it from the command line.
 
