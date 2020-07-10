@@ -24,5 +24,5 @@ Pull requests are welcome, but I can't guarantee you I'll do anything with them.
 
 ## License
 
-TBD. All rights reserved for now.
+MIT License. See `LICENSE` file for details.
 
