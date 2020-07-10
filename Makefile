@@ -11,7 +11,7 @@ OBJ := $(patsubst src/%.cpp,obj/%.o,$(SOURCES))
 
 DEPEND := $(patsubst src/%.cpp,dpnd/%.d,$(SOURCES))
 
-cc: $(OBJ)
+traveller-cc: $(OBJ)
 	$(LINKCXX) $(CXXFLAGS)
 
 dpnd/%.d: src/%.cpp
@@ -29,7 +29,7 @@ obj/%.o: src/%.cpp
 .PHONY: clean cleanobj cleandpnd
 
 clean: cleanobj
-	rm -f cc
+	rm -f traveller-cc
 
 cleanobj:
 	find . -name '*.o' -delete
