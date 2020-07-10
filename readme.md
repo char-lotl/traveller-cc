@@ -24,5 +24,5 @@ Pull requests are welcome, but I can't guarantee you I'll do anything with them.
 
 ## License
 
-TBD. Don't try anything funny while I'm picking one out.
+TBD. All rights reserved for now.
 
