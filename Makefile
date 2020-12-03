@@ -11,14 +11,17 @@ OBJ := $(patsubst src/%.cpp,obj/%.o,$(SOURCES))
 
 DEPEND := $(patsubst src/%.cpp,dpnd/%.d,$(SOURCES))
 
-traveller-cc: $(OBJ)
+PROGRAMNAME := traveller-cc
+
+$(PROGRAMNAME): $(OBJ)
 	$(LINKCXX) $(CXXFLAGS)
 
 dpnd/%.d: src/%.cpp
 	@set -e; mkdir -p $(@D); rm -f $@; \
-         $(CXX) -MM $(CXXFLAGS) $< > $@.$$$$; \
-         sed 's,\($(*F)\)\.o[ :]*,obj/$(*D)/\1.o $@ : ,g' < $@.$$$$ > $@; \
-         rm -f $@.$$$$
+         $(CXX) -MM $(CXXFLAGS) $< > $@.1$$$$; \
+         sed 's,\($(*F)\)\.o[ :]*,obj/$(*D)/\1.o $@ : ,g' < $@.1$$$$ > $@.2$$$$; \
+         sed 's,/\./,/,g' < $@.2$$$$ > $@; \
+         rm -f $@.1$$$$ $@.2$$$$;
 
 include $(DEPEND)
 
@@ -29,7 +32,7 @@ obj/%.o: src/%.cpp
 .PHONY: clean cleanobj cleandpnd
 
 clean: cleanobj
-	rm -f traveller-cc
+	rm -f $(PROGRAMNAME)
 
 cleanobj:
 	find . -name '*.o' -delete

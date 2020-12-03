@@ -35,11 +35,11 @@ void point_buy_scores(std::array<int,6> &characteristic_scores) {
             case START_BUY:
                 display_scores_vertical(characteristic_scores);
                 if (points_left != 0)
-                    discard_string = "discard any remaining points,\n";
+                    discard_string = "discard any remaining points, ";
                 else discard_string = "";
                 qstring = "You have " + std::to_string(points_left) +
-                    " points remaining.\nEnter a number (1 - 6) to select\n"
-                    "a characteristic score to change,\nor 0 to " +
+                    " points remaining.\nEnter a number (1 - 6) to select "
+                    "a characteristic score to change, or 0 to " +
                     discard_string + "confirm your score allocation and proceed: ";
                 response_num = utils::get_int_response_in_range(qstring, 0, 6);
                 if (response_num == 0) pbs = CONFIRM_BUY;

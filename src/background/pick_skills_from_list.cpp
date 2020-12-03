@@ -4,13 +4,14 @@
 #include "skills/Repertoire.h"
 #include "utils/printing/printout.h"
 #include "utils/utils.h"
+#include "utils/print_smart_list.h"
 
 #include "pick_skills_from_list.h"
 #include "display_skill_cats_from_list.h"
 
 using namespace utils::printing;
 
-void display_skills_vertically(const std::vector<skill_type>& skill_list,
+void display_skills_vertically(const std::vector<skill_type>& skill_vector,
                                const std::vector<bool>& available);
 
 std::list<skill_type> pick_skills_from_list(const std::list<skill_type>& skill_list,
@@ -57,8 +58,14 @@ std::list<skill_type> pick_skills_from_list(const std::list<skill_type>& skill_l
 
 void display_skills_vertically(const std::vector<skill_type>& skill_vector,
                                const std::vector<bool>& available) {
+	std::vector<std::string> available_skill_strings;
+	
     for (unsigned int i = 0; i < skill_vector.size(); i++) if (available[i]) {
-        printout() << (char)('a' + i) << ". " <<
-        skills::SK_STRINGS[skill_vector[i]] << "\n";
+        available_skill_strings.push_back(std::string(1, (char)('a' + i)) +
+										  ". " +
+										  skills::SK_STRINGS[skill_vector[i]]);
     }
+	
+	utils::print_smart_list(available_skill_strings);
+	
 }
