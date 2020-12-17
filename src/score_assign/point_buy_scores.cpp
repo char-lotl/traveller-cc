@@ -50,7 +50,7 @@ void point_buy_scores(std::array<int,6> &characteristic_scores) {
                 break;
             case CHANGING_SCORE:
                 current_value = characteristic_scores[current_score_buying];
-                qstring = utils::characteristic_abbrev(current_score_buying) +
+                qstring = utils::characteristic_abbrev[current_score_buying] +
                     "\'s current value is " + std::to_string(current_value) +
                     ". Enter a new value (" + std::to_string(MIN_POINT_BUY) +
                     " - " + std::to_string(MAX_POINT_BUY) + "): ";

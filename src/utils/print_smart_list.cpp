@@ -32,4 +32,6 @@ void utils::print_smart_list(const std::vector<std::string>& string_list) {
 		}
 	}
 	
+	if (i != 0) printout() << "\n";
+	
 }

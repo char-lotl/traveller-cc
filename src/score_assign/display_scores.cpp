@@ -10,7 +10,7 @@ void display_scores_inline(const std::array<int,6>& characteristic_scores) {
     bool first = true;
     for (int j = 0; j < 6; j++) {
         if (!first) printout() << ", ";
-        printout() << utils::characteristic_abbrev(j) << " is " <<
+        printout() << utils::characteristic_abbrev[j] << " is " <<
             characteristic_scores[j];
         first = false;
     }
@@ -20,7 +20,7 @@ void display_scores_inline(const std::array<int,6>& characteristic_scores) {
 void display_scores_vertical(const std::array<int,6>& characteristic_scores) {
     for (int j = 0; j < 6; j++) {
         printout() << std::to_string(j + 1) << ". ";
-        printout() << utils::characteristic_abbrev(j) << " is " <<
+        printout() << utils::characteristic_abbrev[j] << " is " <<
             characteristic_scores[j] << "\n";
     }
 }

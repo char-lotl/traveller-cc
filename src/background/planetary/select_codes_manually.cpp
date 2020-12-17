@@ -1,11 +1,14 @@
-#include <list>
+#include <vector>
 #include <algorithm>
 #include "Codes.h"
-#include "config/Rules.h"
+#include "config/get_rules.h"
 #include "utils/utils.h"
+#include "utils/print_smart_list.h"
 
 #include "utils/printing/printout.h"
 #include "select_codes_manually.h"
+
+using namespace config;
 
 constexpr long ALL_CODES = (1 << Codes::TOTAL_TRADE_CODES) - 1;
 
@@ -232,67 +235,74 @@ constexpr Codes SPARSE_CONFLICTS[Codes::TOTAL_TRADE_CODES] = {
 
 using namespace utils::printing;
 
-void display_trade_codes_vertically(const std::list<trade_code>& tcl);
-void display_trade_codes_inline(const std::list<trade_code>& tcl);
+//void display_trade_codes_vertically(const std::vector<trade_code>& tcv);
+void display_trade_codes_inline(const std::vector<trade_code>& tcv);
+void display_trade_codes_tabular(const std::vector<trade_code>& tcv);
 
-Codes select_codes_manually(const Rules& ru) {
+Codes select_codes_manually() {
     //return Codes(false);
     
-    bool use_sparse_conflicts = ru.get_toggle_rule(rule_type::SPARSE_CODE_CONFLICTS);
+    bool use_sparse_conflicts = get_toggle_rule(rule_type::SPARSE_CODE_CONFLICTS);
     
     Codes available(true);
-    std::list<trade_code> available_tcl;
-    std::list<trade_code> selection_tcl;
+    std::vector<trade_code> available_tcv;
+    std::vector<trade_code> selection_tcv;
     Codes selection(false);
     int response;
     std::string prompt;
     
     while (true) {
         
-        std::list<trade_code> available_tcl = available.get_codes_as_list();
-        std::list<trade_code> selection_tcl = selection.get_codes_as_list();
+        std::vector<trade_code> available_tcv = available.get_codes_as_vector();
+        std::vector<trade_code> selection_tcv = selection.get_codes_as_vector();
         
         if (selection.empty())
-            prompt = "No codes selected. Enter 1 to add a new code, or 0 to confirm"
+            prompt = "No codes selected. Add a [n]ew code, or [c]onfirm"
             " and exit: ";
         else if (available.empty()) {
             printout() << "Homeworld is now ";
-            display_trade_codes_inline(selection_tcl);
+            display_trade_codes_inline(selection_tcv);
             printout() << "No more trade codes consistent with current selection.\n";
-            prompt = "Enter 2 to start over, or 0 to confirm and exit: ";
+            prompt = "[S]tart over, or [c]onfirm and exit: ";
         } else {
             printout() << "Current selection: ";
-            display_trade_codes_inline(selection_tcl);
-            prompt = "Enter 1 to add a new code, 2 to start over, or 0 to confirm"
+            display_trade_codes_inline(selection_tcv);
+            prompt = "Add a [n]ew code, [s]tart over, or [c]onfirm"
             " and exit: ";
         }
         
-        response =
-        utils::get_int_response_in_range(prompt, 0, 2);
+        response = utils::get_char_from_choices(prompt, "cns");
         
         switch (response) {
             case 0:
                 printout() << "Homeworld trade codes confirmed. Selection complete.\n";
                 return selection;
             case 1: {
-                printout() << available_tcl.size() <<
+                printout() << available_tcv.size() <<
                 " codes available.\n";
-                display_trade_codes_vertically(available_tcl);
+                display_trade_codes_tabular(available_tcv);
                 char response_char =
                 utils::get_char_response_in_range("Enter the letter corresponding to one"
-                                                  " of the above\ncodes to add it to"
-                                                  " your homeworld: ",
+                                                  " of the above codes to add it to"
+                                                  " your\nhomeworld: ",
                                                   'a', 'r');
                 response = response_char - 'a';
                 trade_code response_tc = Codes::TCS[response];
-                bool resp_is_available = (std::find(available_tcl.begin(),
-                                                    available_tcl.end(),
-                                                    response_tc) != available_tcl.end());
+                bool resp_is_available = (std::find(available_tcv.begin(),
+                                                    available_tcv.end(),
+                                                    response_tc) != available_tcv.end());
                 if (resp_is_available) {
                     selection = selection.add_code(response_tc);
                     if (use_sparse_conflicts)
                         available = available.intersect(SPARSE_CONFLICTS[response]);
-                    else available = available.intersect(CONFLICTS[response]);
+					else {
+						available = available.intersect(CONFLICTS[response]);
+						if (response_tc == ASTEROID) selection = selection.add_code(VACUUM);
+						if (response_tc == INDUSTRIAL) selection = selection.add_code(HIGH_POPULATION);
+						// very special edge-cases where one code implies another
+						// but with sparse conflicts we can imagine a non-vacuum asteroid :)
+						// (or industrial planets with low populations, for that matter)
+					}
                     printout() << "Added code " <<
                     Codes::TC_STRINGS[response_tc] << ".\n";
                 } else {
@@ -310,25 +320,41 @@ Codes select_codes_manually(const Rules& ru) {
     
 }
 
-void display_trade_codes_vertically(const std::list<trade_code>& tcl) {
+/*
+void display_trade_codes_vertically(const std::vector<trade_code>& tcv) {
     int i = 0;
-    auto j = tcl.begin();
+    auto j = tcv.begin();
     char k;
-    while (j != tcl.end()) {
+    while (j != tcv.end()) {
         k = 'a' + (*j);
         printout() << k << ". " << Codes::TC_STRINGS[*j] << "\n";
         ++i;
         std::advance(j, 1);
     }
 }
+*/
 
-void display_trade_codes_inline(const std::list<trade_code>& tcl) {
+void display_trade_codes_inline(const std::vector<trade_code>& tcv) {
     bool first = true;
-    for (const trade_code& i : tcl) {
+    for (const trade_code& i : tcv) {
         std::string code_string = Codes::TC_STRINGS[i];
         if (first) first = false;
         else printout() << ", ";
         printout() << code_string;
     }
     printout() << ".\n";
+}
+
+void display_trade_codes_tabular(const std::vector<trade_code>& tcv) {
+	int i = 0;
+	auto j = tcv.begin();
+	char k;
+	std::vector<std::string> strv;
+	while (j != tcv.end()) {
+		k = 'a' + (*j);
+		strv.push_back(std::string(1, k) + ". " + Codes::TC_STRINGS[*j]);
+		++i;
+		std::advance(j, 1);
+	}
+	utils::print_smart_list(strv);
 }

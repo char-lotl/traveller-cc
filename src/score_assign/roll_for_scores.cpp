@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <string>
 #include "utils/utils.h"
-#include "config/Rules.h"
+#include "config/get_rules.h"
 #include "utils/Roller.h"
 #include "utils/printing/printout.h"
 
@@ -17,11 +17,11 @@ enum yarb_type {
 };
 
 using namespace utils::printing;
+using namespace config;
 
 yarb_type check_for_yarborough(const std::array<int,6> &scores);
 
-void roll_for_scores(std::array<int,6> &characteristic_scores,
-                     const Rules &ru) {
+void roll_for_scores(std::array<int,6> &characteristic_scores) {
     std::string response;
     std::array<int,6> characteristic_rolls;
     
@@ -42,7 +42,7 @@ void roll_for_scores(std::array<int,6> &characteristic_scores,
         
         yarb_type yarb = NO_YARB;
         
-        if (ru.get_toggle_rule(rule_type::YARBOROUGH_DETECTION)) {
+        if (get_toggle_rule(rule_type::YARBOROUGH_DETECTION)) {
         
             yarb = check_for_yarborough(characteristic_rolls);
             
@@ -59,8 +59,8 @@ void roll_for_scores(std::array<int,6> &characteristic_scores,
             
         }
         
-        if (ru.get_toggle_rule(rule_type::REROLL_QUERY) ||
-            (ru.get_toggle_rule(rule_type::YARBOROUGH_REROLL_OVERRIDE) &&
+        if (get_toggle_rule(rule_type::REROLL_QUERY) ||
+            (get_toggle_rule(rule_type::YARBOROUGH_REROLL_OVERRIDE) &&
              (yarb != NO_YARB))) {
             
             if (utils::get_bool_response("Keep scores? (y/n) ")) break;
@@ -84,7 +84,7 @@ void roll_for_scores(std::array<int,6> &characteristic_scores,
             if (!scores_assigned[j]) {
                 if (!first) qstring = qstring + ", ";
                 qstring = qstring + std::to_string(j) + " for " +
-                    utils::characteristic_abbrev(j);
+                    utils::characteristic_abbrev[j];
                 first = false;
             }
         }
@@ -112,7 +112,7 @@ void roll_for_scores(std::array<int,6> &characteristic_scores,
             for (int j = 0; j < 6; j++) {
                 if (scores_assigned[j]) {
                     if (!first) printout() << ", ";
-                    printout() << utils::characteristic_abbrev(j) << " is " <<
+                    printout() << utils::characteristic_abbrev[j] << " is " <<
                     characteristic_scores[j];
                     first = false;
                 }

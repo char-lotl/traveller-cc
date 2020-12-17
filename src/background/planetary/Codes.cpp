@@ -63,6 +63,7 @@ bool Codes::overlaps(const Codes& c) const {
     return trade_codes_long & c.trade_codes_long;
 }
 
+/*
 std::list<trade_code> Codes::get_codes_as_list() const {
     std::list<trade_code> tcl;
     for (int i = 0; i < TOTAL_TRADE_CODES; i++) {
@@ -70,13 +71,15 @@ std::list<trade_code> Codes::get_codes_as_list() const {
     }
     return tcl;
 }
+*/
 
-/*std::vector<trade_code> Codes::get_codes_as_vector() const {
+std::vector<trade_code> Codes::get_codes_as_vector() const {
     std::vector<trade_code> tcv;
     for (int i = 0; i < TOTAL_TRADE_CODES; i++) {
-        if (include_code(TCS[i])) tcl.push_back(TCS[i]);
+        if (include_code(TCS[i])) tcv.push_back(TCS[i]);
     }
-}*/
+	return tcv;
+}
 
 bool Codes::empty() const {
     return (trade_codes_long == 0);

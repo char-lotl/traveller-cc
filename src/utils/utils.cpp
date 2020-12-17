@@ -5,29 +5,18 @@
 
 using namespace utils::printing;
 
-std::string utils::characteristic_abbrev(const int& ctype) {
-    switch (ctype) {
-        case 0:
-            return "STR";
-        case 1:
-            return "DEX";
-        case 2:
-            return "END";
-        case 3:
-            return "INT";
-        case 4:
-            return "EDU";
-        case 5:
-            return "SOC";
-        default:
-            return "???";
-    }
-}
+const std::string utils::characteristic_abbrev[6] = {
+	"STR", "DEX", "END", "INT", "EDU", "SOC"
+};
 
 bool utils::isInt(const std::string& line) {
     char* p;
     strtol(line.c_str(), &p, 10);
     return *p == 0;
+	// hacky but concise. uses a library parser to advance the
+	// pointer p to the end of the numerical part of the C-style string.
+	// if line is a number, this is the end of the string, and p
+	// will now point to the null character.
 }
 
 int utils::char_modifier_from_score(const int& score) {
@@ -77,6 +66,7 @@ char utils::get_char_response_in_range(const std::string& query_string,
         printout() << query_string;
         getline(std::cin, response);
         response_char = response[0];
+		if (response_char <= 'Z') response_char += 32;
         if ((response_char < min) || (response_char > max)) {
             printout() << "Sorry, that response was out of range.\n";
             continue;
@@ -84,4 +74,25 @@ char utils::get_char_response_in_range(const std::string& query_string,
         break;
     }
     return response_char;
+}
+
+int utils::get_char_from_choices(const std::string& query_string,
+								 const std::string& allowed_chars) {
+	std::string response;
+	char response_char;
+	unsigned long response_place;
+	while (true) {
+		printout() << query_string;
+		getline(std::cin, response);
+		response_char = response[0];
+		if (response_char <= 'Z') response_char += 32;
+		response_place = allowed_chars.find(response_char);
+		if (response_place == std::string::npos) {
+			printout() << "Sorry, that response was "
+				"not among the options provided.\n";
+			continue;
+		}
+		break;
+	}
+	return response_place;
 }
