@@ -1,0 +1,62 @@
+NAME,Agent
+DESCRIPTION,Law enforcement agents/ spies/ corporate operatives and others who work in the shadows.
+MILITARY,0
+QUALIFICATION,INT:6
+CASHBENS,1000,2000,5000,7500,10000,25000,50000
+OTHERBENS,MISC:Scientific Equipment,ATTR:INT,SHIPSHARE,ASSET:Weapon,ASSET:Combat Implant,E:ASSET:Social Implant|ASSET:Combat Implant,TASMEMBER
+PERSDEV,S:GUN_COMBAT:A,ATTR:DEX,ATTR:END,S:MELEE:A,ATTR:INT,S:ATHLETICS:A
+SERVICE,S:STREETWISE,S:DRIVE:A,S:INVESTIGATE,S:COMPUTERS,S:RECON,S:GUN_COMBAT:A
+ADVANCED;ATTR:EDU:8,S:ADVOCATE,S:COMMS,S:COMPUTERS,S:MEDIC,S:STEALTH,S:REMOTE_OPERATIONS
+MISHAPS
+You are severely injured in action. [T]ake a 2 on the Injury table, or [R]oll twice on the table and take the lower result.,Etr:INJ:2|INJ:DISADV
+A criminal or other figure under investigation offers you a deal. [A]ccept/ and you leave this career without further penalty (although you lose the Benefit roll as normal). [R]efuse/ and you must roll twice on the Injury table and take the lower result. You gain an Enemy and one level in any skill you choose.,Ear:-|INJ:DISADV;NPC:ENEMY;S:A
+An investigation goes critically wrong or leads to the top, ruining your career.,R:S:ADVOCATE:8,You successfully plead no wrongdoing and keep your benefits.,BENS:KEEPMISHAP,-,-
+You learn something you shouldn’t know/ and people want to kill you for it. Gain an Enemy and Deception 1.,NPC:ENEMY;S:DECEPTION:1
+Your work ends up coming home with you/ and someone gets hurt. Choose one of your Contacts/ Allies or family members/ and roll twice on the Injury table for them/ taking the lower result.,-
+-,INJ
+EVENTS
+Disaster! Roll on the mishap table/ but you are not ejected from this career.,MISHAP
+An investigation takes on a dangerous turn.,RB:S:INVG:8;S:STRW:8,You navigate the perils of the investigation and gain a rank in one of the following skills:,C:Deception;Jack of All Trades;Persuade;Tactics (any),The dangers of the investigation prove too much for you.,MISHAP,-,S:DECEPTION,-,S:JACK_OF_ALL_TRADES,-,S:PERSUADE,-,S:TACTICS:A
+You complete a mission for your superiors/ and are suitably rewarded.,BENS:ONETIMEBONUS
+You establish a network of contacts.,XD3:NPC:CONTACT
+You are given advanced training in a specialist field. Throw Education 8+ to increase any one skill you already have by one level.,S:A0+
+-,LIFEEVENT
+You go undercover to investigate an enemy. Your identity is...,C:A citizen.;A scoundrel,-,R:S:DECEPTION:8,-,R:S:DECEPTION:8,Your infiltration as a humble citizen is a success.,CAREEREVENT:Citizen;S:CAREERTABLE:Citizen:ANYSPECIALIST,Your infiltration is a failure.,CAREERMISHAP:Citizen,Your infiltration of a criminal group is a success.,CAREEREVENT:Rogue;S:CAREERTABLE:Rogue:ANYSPECIALIST,Your infiltration of the criminal underworld is a failure.,CAREERMISHAP:Rogue
+You go above and beyond the call of duty, gaining a +2 DM to your next Advancement check.,ADV:NEXTBONUS:2
+You are given specialist training in vehicles. Gain one of:,C:Drive (any) 1;Flyer (any) 1;Pilot (any) 1;Gunner (any) 1,-,S:DRIVE:A:1,-,S:FLYER:A:1,-,S:PILOT:A:1,-,S:GUNNER:A:1
+You are befriended by a senior agent. Thanks to his aid/ either:,C:increase Investigate by one level;take a +4 DM to an Advancement roll,-,S:INVESTIGATE,-,ADV:ONETIMEBONUS:4
+Your efforts uncover a major conspiracy against your employers. You are automatically promoted.,PROMOTE
+ASSIGNMENTS
+NAME,Law Enforcement
+DESCRIPTION,You were a police officer or detective.
+SURVIVAL,END:6
+ADVANCEMENT,INT:6
+SPECIALIST,S:INVESTIGATE,S:RECON,S:STREETWISE,S:STEALTH,S:MELEE:A,S:ADVOCATE
+Rookie,-
+Corporal,S:STREETWISE:1
+Sergeant,-
+Lieutenant,-
+Detective,S:INVESTIGATE:1
+Chief,S:ADMIN:1
+Commissioner,ATTR:SOC
+END
+NAME,Intelligence
+DESCRIPTION,You worked as a spy or saboteur.
+SURVIVAL,INT:7
+ADVANCEMENT,INT:5
+SPECIALIST,S:INVESTIGATE,S:RECON,S:COMMS,S:STEALTH,S:PERSUADE,S:DECEPTION
+-,-
+Agent,S:DECEPTION:1
+Field Agent,S:INVESTIGATE:1
+-,-
+Special Agent,S:GUN_COMBAT:A:1
+Assistant Director,-
+Director,-
+END
+NAME,Corporate
+DESCRIPTION,You worked for a corporation/ spying on rival organizations.
+SURVIVAL,INT:5
+ADVANCEMENT,INT:7
+SPECIALIST,S:INVESTIGATE,S:COMPUTERS,S:STEALTH,S:GUN_COMBAT:A,S:DECEPTION,S:STREETWISE
+COPYRANKS:Intelligence
+END
