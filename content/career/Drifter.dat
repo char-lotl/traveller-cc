@@ -1,0 +1,67 @@
+NAME,Drifter
+DESCRIPTION,Wanderers/ hitch-hikers and travellers/ drifters are those who roam the stars without purpose or direction.
+MILITARY,0
+QUALIFICATION,AUTO
+CASHBENS,0,0,1000,2000,3000,4000,8000
+OTHERBENS,NPC:CONTACT,ASSET:Weapon,NPC:ALLY,ASSET:Weapon,ATTR:EDU,SHIPSHARE,X2:SHIPSHARE
+PERSDEV,ATTR:STR,ATTR:END,ATTR:DEX,S:JACK_OF_ALL_TRADES,ATTR:END,ATTR:INT
+SERVICE,S:ATHLETICS:A,S:MELEE:unarmed,S:RECON,S:STREETWISE,S:STEALTH,S:SURVIVAL
+ADVANCED,NONE
+BASICTRAINING,ASSIGNMENT
+MISHAPS
+You are severely injured. [T]ake a 2 on the Injury table, or [R]oll twice on the table and take the lower result.,Etr:INJ:2|INJ:DISADV
+You are injured.,INJ
+You run afoul of a criminal gang/ corrupt bureaucrat or other foe. Gain an Enemy.,NPC:ENEMY
+You suffer from a life-threatening illness. Reduce your Endurance by 1.,LOSEATTR:END
+Betrayed by a friend. One of your Contacts or Allies betrays you/ ending your career. That Contact or Ally becomes a Rival or Enemy. If you have no Contacts or Allies/ then you are betrayed by someone you never saw coming and still gain a Rival or Enemy.,BETRAY
+You don't know what happened to you. There is a gap in your memory.,-
+EVENTS
+Disaster! Roll on the mishap table/ but you are not ejected from this career.,MISHAP
+A patron offers you a chance at a job. If you accept/ you gain a +4 DM to your next Qualification roll, but you owe that patron a favour.,C:Accept;Decline,-,QUAL:NEXTBONUS:4,-,-
+You pick up a few useful skills here and there. Gain one level of Jack of All Trades/ Survival/ Streetwise or Melee (any).,C:Jack of All Trades;Survival;Streetwise;Melee (any),-,S:JACK_OF_ALL_TRADES,-,S:SURVIVAL,-,S:STREETWISE,-,S:MELEE:A
+You manage to scavenge something of use. Gain a +1 DM to any one Benefit roll.,BENS:ONETIMEBONUS
+You encounter something unusual.,LIFEEVENT:12
+-,LIFEEVENT
+You are attacked by enemies. Gain an Enemy if you do not have one already.,NPC:ENEMY:1+;RB:S:MELEE:A:8;GUN_COMBAT:A:8;STEALTH:8,-,INJ
+You are offered a chance to take part in a risky but rewarding adventure. If you accept/ roll 1d6. On a 1-2/ you are injured. On a 3-4/ you survive but gain nothing. On a 5-6, you succeed. Gain +4 to one Benefit roll.,C:Accept;Decline,-,R:D3,You decide not to take part/ and nothing further comes of it.,You are injured for your trouble.,INJ,You survive unscathed/ but gain nothing.,-,Success! Enjoy the fruits of your efforts.,BENS:ONETIMEBONUS:4
+Life on the edge hones your abilities. Increase any skill you already have by one level.,S:A0+
+You are forcibly drafted. Roll for the Draft next term.,DRAFTNEXT
+You thrive on adversity. You are automatically promoted.,PROMOTE
+ASSIGNMENTS
+NAME,Barbarian
+DESCRIPTION,You lived on a primitive world without the benefits of technology.
+SURVIVAL,END:7
+ADVANCEMENT,INT:7
+SPECIALIST,S:ANIMALS:A,S:CAROUSE,S:MELEE:blade,S:STEALTH,S:SEAFARER:A,S:SURVIVAL
+-,-
+-,S:SURVIVAL:1
+Warrior,S:MELEE:blade:1
+-,-
+Chieftain,S:LEADERSHIP:1
+-,-
+-,-
+END
+NAME,Wanderer
+DESCRIPTION,You lived hand to mouth in slums and starports across the galaxy/ travelling at random.
+SURVIVAL,END:7
+ADVANCEMENT,INT:7
+SPECIALIST,S:ATHLETICS:A,S:DECEPTION,S:RECON,S:STEALTH,S:STREETWISE,S:SURVIVAL
+-,-
+-,S:STREETWISE:1
+-,-
+-,S:DECEPTION:1
+-,-
+-,-
+-,-
+END
+NAME,Scavenger
+DESCRIPTION,You worked as a belter (asteroid miner) or on a salvage crew.
+SURVIVAL,DEX:7
+ADVANCEMENT,END:7
+SPECIALIST,S:PILOT:small craft,S:MECHANIC,S:ASTROGATION,S:VACC_SUIT,S:ZERO_G,S:GUN_COMBAT:A
+-,-
+-,S:VACC_SUIT:1
+-,-
+-,E:S:TRADE:belter:1|S:MECHANIC:1
+
+END

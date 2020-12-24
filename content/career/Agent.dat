@@ -3,13 +3,14 @@ DESCRIPTION,Law enforcement agents/ spies/ corporate operatives and others who w
 MILITARY,0
 QUALIFICATION,INT:6
 CASHBENS,1000,2000,5000,7500,10000,25000,50000
-OTHERBENS,MISC:Scientific Equipment,ATTR:INT,SHIPSHARE,ASSET:Weapon,ASSET:Combat Implant,E:ASSET:Social Implant|ASSET:Combat Implant,TASMEMBER
+OTHERBENS,MISC:Scientific Equipment,ATTR:INT,SHIPSHARE,ASSET:Weapon,ASSET:Combat Implant,E:ASSET:Social Implant;ASSET:Combat Implant,TASMEMBER
 PERSDEV,S:GUN_COMBAT:A,ATTR:DEX,ATTR:END,S:MELEE:A,ATTR:INT,S:ATHLETICS:A
 SERVICE,S:STREETWISE,S:DRIVE:A,S:INVESTIGATE,S:COMPUTERS,S:RECON,S:GUN_COMBAT:A
 ADVANCED;ATTR:EDU:8,S:ADVOCATE,S:COMMS,S:COMPUTERS,S:MEDIC,S:STEALTH,S:REMOTE_OPERATIONS
+BASICTRAINING,SERVICE
 MISHAPS
-You are severely injured in action. [T]ake a 2 on the Injury table, or [R]oll twice on the table and take the lower result.,Etr:INJ:2|INJ:DISADV
-A criminal or other figure under investigation offers you a deal. [A]ccept/ and you leave this career without further penalty (although you lose the Benefit roll as normal). [R]efuse/ and you must roll twice on the Injury table and take the lower result. You gain an Enemy and one level in any skill you choose.,Ear:-|INJ:DISADV;NPC:ENEMY;S:A
+You are severely injured in action. [T]ake a 2 on the Injury table, or [R]oll twice on the table and take the lower result.,Etr:INJ:2;INJ:DISADV
+A criminal or other figure under investigation offers you a deal. [A]ccept/ and you leave this career without further penalty (although you lose the Benefit roll as normal). [R]efuse/ and you must roll twice on the Injury table and take the lower result. You gain an Enemy and one level in any skill you choose.,Ear:-;INJ:DISADV;NPC:ENEMY;S:A
 An investigation goes critically wrong or leads to the top, ruining your career.,R:S:ADVOCATE:8,You successfully plead no wrongdoing and keep your benefits.,BENS:KEEPMISHAP,-,-
 You learn something you shouldn’t know/ and people want to kill you for it. Gain an Enemy and Deception 1.,NPC:ENEMY;S:DECEPTION:1
 Your work ends up coming home with you/ and someone gets hurt. Choose one of your Contacts/ Allies or family members/ and roll twice on the Injury table for them/ taking the lower result.,-

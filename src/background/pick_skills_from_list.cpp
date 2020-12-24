@@ -3,6 +3,7 @@
 #include "skills/skill_type.h"
 #include "skills/Repertoire.h"
 #include "utils/printing/printout.h"
+#include "utils/printing/number_words.h"
 #include "utils/utils.h"
 #include "utils/print_smart_list.h"
 

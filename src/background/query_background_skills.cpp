@@ -2,6 +2,7 @@
 #include "skills/skill_type.h"
 #include "skills/Repertoire.h"
 #include "utils/printing/printout.h"
+#include "utils/printing/number_words.h"
 
 #include "query_background_skills.h"
 #include "utils/remove_overlap.h"

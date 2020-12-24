@@ -2,20 +2,6 @@
 #include <string>
 #include "Printer.h"
 
-const std::string utils::printing::NUMBER_WORDS[11] = {
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-    "ten"
-};
-
 /*
 template <class T>
 const utils::printing::Printer& utils::printing::Printer::operator<<(const T& x) const {

@@ -20,10 +20,7 @@ namespace printing {
         friend const Printer& printout();
     };
 
-    extern const std::string NUMBER_WORDS[11];
-
 }
 }
 
 #endif
-
