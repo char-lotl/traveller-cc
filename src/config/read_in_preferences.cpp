@@ -1,8 +1,9 @@
-#include <fstream>
 #include <array>
+#include <vector>
 #include <string>
 #include "Rules.h"
 #include "utils/printing/printout.h"
+#include "utils/reading/get_file_lines.h"
 
 #include "read_in_preferences.h"
 
@@ -106,19 +107,16 @@ void read_int_phase(const std::string& phase_declare,
                     int& r);
 
 using namespace utils::printing;
+using namespace utils::reading;
 
 Rules read_in_preferences() {
-    std::ifstream infile;
-    std::string data_in;
+    std::vector<std::string> data_in(get_file_lines("pref.cfg"));
     std::array<bool,Rules::NUM_TOGGLE_RULES> toggle_rules{};
     std::array<int,Rules::NUM_INT_RULES> int_rules{};
     
-    infile.open("pref.cfg");
     int r = INITIAL_PHASE;
     
     while (true) {
-        getline(infile, data_in);
-        if (data_in[0] == '#') continue; // This is how I leave comments.
         
         // Lines in the config file either:
         // - contain a command-line phrase
@@ -129,16 +127,16 @@ Rules read_in_preferences() {
         
         switch (LINE_TYPES_IN_ORDER[r]) {
             case LineType::LINE_COMMAND: {
-                read_command_phrase(PROMPTS[r], data_in, r);
+                read_command_phrase(PROMPTS[r], data_in[r], r);
                 break;
             }
             case LineType::LINE_TOGGLE_RULE: {
-                read_toggle_phase(PROMPTS[r], data_in, toggle_rules,
+                read_toggle_phase(PROMPTS[r], data_in[r], toggle_rules,
                                   RULES_IN_ORDER[r], r);
                 break;
             }
             case LineType::LINE_INT_RULE: {
-                read_int_phase(PROMPTS[r], data_in, int_rules,
+                read_int_phase(PROMPTS[r], data_in[r], int_rules,
                                RULES_IN_ORDER[r], r);
                 break;
             }
@@ -149,8 +147,6 @@ Rules read_in_preferences() {
         }
         if (r == END_PHASE) break;
     }
-    
-    infile.close();
     
     Rules ru(std::move(toggle_rules), std::move(int_rules));
     

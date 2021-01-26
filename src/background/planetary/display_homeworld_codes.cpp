@@ -1,9 +1,9 @@
-#include <iterator>
 #include <vector>
 #include <string>
 #include "Codes.h"
 #include "display_homeworld_codes.h"
 #include "utils/printing/printout.h"
+#include "utils/printing/Formatter.h"
 
 using namespace utils::printing;
 
@@ -13,14 +13,11 @@ void display_homeworld_codes(const Codes& homeworld_trade_codes) {
         printout() << "No trade codes apply to your homeworld.\n";
     } else {
         printout() << "Your homeworld has the following trade codes:\n";
-        bool first = true;
+		std::vector<std::string> code_strings;
         for (const trade_code& i : tcv) {
-            std::string code_string = Codes::TC_STRINGS[i];
-            if (first) first = false;
-            else printout() << ", ";
-            printout() << code_string;
+			code_strings.push_back(Codes::TC_STRINGS[i]);
         }
-        printout() << ".\n";
+		printout() << CommaList(code_strings);
     }
 }
 

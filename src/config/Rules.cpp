@@ -4,7 +4,6 @@
 Rules::Rules(const std::array<bool,NUM_TOGGLE_RULES>& trp,
              const std::array<int,NUM_INT_RULES>& irp) :
              toggle_rules(trp), int_rules(irp) {
-    // everything's handled by the initialization list
 }
 
 Rules::Rules(std::array<bool,NUM_TOGGLE_RULES>&& trp,

@@ -1,5 +1,4 @@
-#include <list>
-#include <array>
+#include <vector>
 #include "config/get_rules.h"
 #include "planetary/Codes.h"
 class Repertoire;
@@ -8,6 +7,7 @@ class Repertoire;
 #include "skills/skill_type.h"
 #include "utils/utils.h"
 #include "utils/constants.h"
+#include "utils/print_section_break.h"
 
 #include "pick_background_skills.h"
 #include "planetary/generate_trade_codes.h"
@@ -18,15 +18,17 @@ class Repertoire;
 
 using namespace config;
 
-int get_num_background_skills(const std::array<int,6>& characteristic_scores);
+int get_num_background_skills(const std::vector<int>& characteristic_scores);
 
 Codes get_world_codes();
 GenerationVariant gen_variant_from_rules();
 
-void pick_background_skills(const std::array<int,6>& characteristic_scores,
+void pick_background_skills(const std::vector<int>& characteristic_scores,
                             Repertoire& rep) {
     
-    std::list<skill_type> homeworld_skills;
+	utils::print_section_break();
+	
+    std::vector<skill_type> homeworld_skills;
     
     Codes homeworld_trade_codes = get_world_codes();
     
@@ -39,7 +41,7 @@ void pick_background_skills(const std::array<int,6>& characteristic_scores,
     
 }
 
-int get_num_background_skills(const std::array<int,6>& characteristic_scores) {
+int get_num_background_skills(const std::vector<int>& characteristic_scores) {
     int edu_score = characteristic_scores[constants::EDU];
     return utils::char_modifier_from_score(edu_score) + 3;
 }

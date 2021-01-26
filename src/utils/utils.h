@@ -12,8 +12,8 @@ namespace utils {
                                   const int& min,
                                   const int& max);
     char get_char_response_in_range(const std::string& query_string,
-                                    const char& min,
-                                    const char& max);
+                                    const char min,
+                                    const char max);
 	int get_char_from_choices(const std::string& query_string,
 							  const std::string& allowed_chars);
     bool get_bool_response(const std::string& query_string);

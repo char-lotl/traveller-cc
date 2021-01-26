@@ -1,4 +1,4 @@
-#include <list>
+#include <vector>
 #include "skills/skill_type.h"
 #include "skills/Repertoire.h"
 #include "utils/printing/printout.h"
@@ -6,18 +6,18 @@
 
 #include "query_background_skills.h"
 #include "utils/remove_overlap.h"
-#include "display_skill_cats_from_list.h"
+#include "display_skill_cats.h"
 #include "pick_skills_from_list.h"
 
-extern template void remove_overlap(std::list<skill_type>&,
-                                    const std::list<skill_type>&);
+extern template void remove_overlap(std::vector<skill_type>&,
+                                    const std::vector<skill_type>&);
 
-void learn_skill_list(Repertoire& rep, std::list<skill_type> sk_li);
+void learn_skills(Repertoire& rep, std::vector<skill_type> const& sks);
 
 using namespace utils::printing;
 
-void query_background_skills(std::list<skill_type>& homeworld_skills,
-                             const int& num_bg_skills,
+void query_background_skills(std::vector<skill_type> const& homeworld_skills,
+                             int num_bg_skills,
                              Repertoire& rep) {
     
     int num_hw_skills = homeworld_skills.size();
@@ -27,21 +27,21 @@ void query_background_skills(std::list<skill_type>& homeworld_skills,
         " have your hands more than full trying to learn what it has to"
         " offer you. Pick from among the following options:\n";
         
-        std::list<skill_type> selected_skills =
+        std::vector<skill_type> selected_skills =
         pick_skills_from_list(homeworld_skills, num_bg_skills);
         
-        learn_skill_list(rep, selected_skills);
+        learn_skills(rep, selected_skills);
     }
     if (num_bg_skills == num_hw_skills) {
-        learn_skill_list(rep, homeworld_skills);
+        learn_skills(rep, homeworld_skills);
         
         printout() << "Your homeworld poses challenges, and you"
         " have your hands\nfull learning what it has to offer you.\n"
         "You learn the following skills:\n";
-        display_skill_cats_from_list(homeworld_skills);
+        display_skill_cats(homeworld_skills);
     }
     if (num_bg_skills > num_hw_skills) {
-        std::list<skill_type> education_skills{
+        std::vector<skill_type> education_skills{
             ADMIN, ADVOCATE, ART, CAROUSE, COMMS, COMPUTERS,
             DRIVE, ENGINEER, LANGUAGE, MEDIC, SCIENCE_PHYSICAL,
             SCIENCE_LIFE, SCIENCE_SOCIAL, SCIENCE_SPACE, TRADE
@@ -54,12 +54,12 @@ void query_background_skills(std::list<skill_type>& homeworld_skills,
             "growing up, leaving you free to pursue your education.\n"
             "Pick ";
         } else {
-            learn_skill_list(rep, homeworld_skills);
+            learn_skills(rep, homeworld_skills);
             printout() << "While some of your attention growing up is"
             " directed towards\nthe unique challenges posed by your "
             "environment, you are also\nable to undergo some education.\n"
             "You learn the following skills:\n";
-            display_skill_cats_from_list(homeworld_skills);
+            display_skill_cats(homeworld_skills);
             printout() << "You may also learn ";
             
         }
@@ -67,16 +67,16 @@ void query_background_skills(std::list<skill_type>& homeworld_skills,
         ((num_edu_skills > 1) ? "s" : "") <<
         " from among the following options:\n";
         
-        std::list<skill_type> selected_skills =
+        std::vector<skill_type> selected_skills =
         pick_skills_from_list(education_skills, num_edu_skills);
         
-        learn_skill_list(rep, selected_skills);
+        learn_skills(rep, selected_skills);
     }
     
 }
 
-void learn_skill_list(Repertoire& rep, std::list<skill_type> sk_li) {
-    for (skill_type s : sk_li) {
+void learn_skills(Repertoire& rep, std::vector<skill_type> const& sks) {
+    for (skill_type const& s : sks) {
         rep.learn_skill(s);
     }
 }

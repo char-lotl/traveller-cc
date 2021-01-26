@@ -1,4 +1,4 @@
-#include <array>
+#include <vector>
 #include "config/get_rules.h"
 
 #include "assign_characteristic_scores.h"
@@ -9,7 +9,7 @@
 
 using namespace config;
 
-void assign_characteristic_scores(std::array<int,6>& characteristic_scores){
+void assign_characteristic_scores(std::vector<int>& characteristic_scores){
     
     bool query_method = get_toggle_rule(rule_type::ASSIGN_METHOD_QUERY);
     int in_type; // must use int because get_int_rule returns this

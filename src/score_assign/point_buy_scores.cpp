@@ -1,4 +1,4 @@
-#include <array>
+#include <vector>
 #include <string>
 #include "utils/utils.h"
 #include "utils/printing/printout.h"
@@ -19,8 +19,8 @@ const int SCORE_COSTS[] = {0, 1, 3, 5, 7, 10, 13, 17};
 
 using namespace utils::printing;
 
-void point_buy_scores(std::array<int,6> &characteristic_scores) {
-    characteristic_scores.fill(6);
+void point_buy_scores(std::vector<int> &characteristic_scores) {
+    characteristic_scores.assign(6, 6);
     int points_left = 12;
     int current_score_buying = 0;
     int current_value;

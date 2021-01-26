@@ -1,5 +1,4 @@
-#include <list>
-//#include <vector>
+#include <vector>
 #include <string>
 #include "Codes.h"
 
@@ -45,11 +44,6 @@ const std::string Codes::TC_STRINGS[Codes::TOTAL_TRADE_CODES] = {
     "Water World"
 };
 
-/*constexpr Codes::Codes(const long& tcl) :
-trade_codes_long(tcl) {
-    // everything's handled by the initialization list
-}*/
-
 Codes::Codes(const bool& an) :
 trade_codes_long(0777777 * an) {
     
@@ -62,16 +56,6 @@ bool Codes::include_code(const trade_code& tc) const {
 bool Codes::overlaps(const Codes& c) const {
     return trade_codes_long & c.trade_codes_long;
 }
-
-/*
-std::list<trade_code> Codes::get_codes_as_list() const {
-    std::list<trade_code> tcl;
-    for (int i = 0; i < TOTAL_TRADE_CODES; i++) {
-        if (include_code(TCS[i])) tcl.push_back(TCS[i]);
-    }
-    return tcl;
-}
-*/
 
 std::vector<trade_code> Codes::get_codes_as_vector() const {
     std::vector<trade_code> tcv;

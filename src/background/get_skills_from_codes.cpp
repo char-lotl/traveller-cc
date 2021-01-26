@@ -1,4 +1,4 @@
-#include <list>
+#include <vector>
 #include "skills/skill_type.h"
 #include "planetary/Codes.h"
 
@@ -45,7 +45,7 @@ const skill_type SKILL_TRANSLATE[NUM_HW_SKILLS] = {
     [hw_sk::ZERO_G]     = ZERO_G
 };
 
-void get_skills_from_codes(std::list<skill_type>& homeworld_skills,
+void get_skills_from_codes(std::vector<skill_type>& homeworld_skills,
                            const Codes& homeworld_trade_codes) {
     for (int i = 0; i < NUM_HW_SKILLS; i++) {
         if (homeworld_trade_codes.overlaps(SKILL_CODES[i]))

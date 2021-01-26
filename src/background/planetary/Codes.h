@@ -1,7 +1,6 @@
 #ifndef CODES_H
 #define CODES_H
 
-//#include <list>
 #include <vector>
 #include <string>
 
@@ -36,7 +35,6 @@ public:
     bool include_code(const trade_code& tc) const;
     bool empty() const;
     bool overlaps(const Codes& c) const;
-    //std::list<trade_code> get_codes_as_list() const;
     std::vector<trade_code> get_codes_as_vector() const;
     Codes add_code(const trade_code& tc) const;
     Codes intersect(const Codes& c) const;

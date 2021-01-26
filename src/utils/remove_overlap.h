@@ -4,21 +4,18 @@
 #include <iterator>
 
 template<class T>
-void remove_overlap(std::list<T>& a, const std::list<T>& b) {
-    auto i = a.begin();
-    auto j = b.begin();
-    auto k = i;
+void remove_overlap(std::vector<T>& a, const std::vector<T>& b) {
+	unsigned int i = 0, j = 0;
+	unsigned int lena = a.size(), lenb = b.size();
+	std::vector<T> c;
     
-    while (i != a.end() && j != b.end()) {
-        if (*i < *j) { std::advance(i, 1); continue; }
-        if (*i == *j) {
-            k = i;
-            std::advance(i, 1);
-            a.erase(k);
-            continue;
-        }
-        if (*i > *j) { std::advance(j, 1); continue; }
+    while (i < lena && j < lenb) {
+		if (a[i] < b[j]) { c.push_back(a[i++]); continue; }
+        if (a[i] == b[j]) { ++i; continue; }
+        if (a[i] > b[j]) { ++j; continue; }
     }
+	
+	a = std::move(c);
 }
 
 #endif

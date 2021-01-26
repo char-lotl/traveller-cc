@@ -3,9 +3,9 @@
 #include "Codes.h"
 #include "config/get_rules.h"
 #include "utils/utils.h"
-#include "utils/print_smart_list.h"
 
 #include "utils/printing/printout.h"
+#include "utils/printing/Formatter.h"
 #include "select_codes_manually.h"
 
 using namespace config;
@@ -320,41 +320,20 @@ Codes select_codes_manually() {
     
 }
 
-/*
-void display_trade_codes_vertically(const std::vector<trade_code>& tcv) {
-    int i = 0;
-    auto j = tcv.begin();
-    char k;
-    while (j != tcv.end()) {
-        k = 'a' + (*j);
-        printout() << k << ". " << Codes::TC_STRINGS[*j] << "\n";
-        ++i;
-        std::advance(j, 1);
-    }
-}
-*/
-
 void display_trade_codes_inline(const std::vector<trade_code>& tcv) {
     bool first = true;
+	std::vector<std::string> code_strings;
     for (const trade_code& i : tcv) {
-        std::string code_string = Codes::TC_STRINGS[i];
-        if (first) first = false;
-        else printout() << ", ";
-        printout() << code_string;
+        code_strings.push_back(Codes::TC_STRINGS[i]);
     }
+	printout() << CommaList(code_strings);
     printout() << ".\n";
 }
 
 void display_trade_codes_tabular(const std::vector<trade_code>& tcv) {
-	int i = 0;
-	auto j = tcv.begin();
-	char k;
 	std::vector<std::string> strv;
-	while (j != tcv.end()) {
-		k = 'a' + (*j);
-		strv.push_back(std::string(1, k) + ". " + Codes::TC_STRINGS[*j]);
-		++i;
-		std::advance(j, 1);
+	for (trade_code const& t : tcv) {
+		strv.push_back(std::string(1, 'a' + t) + ". " + Codes::TC_STRINGS[t]);
 	}
-	utils::print_smart_list(strv);
+	printout() << TabularList(strv);
 }

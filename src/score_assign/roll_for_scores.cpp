@@ -1,10 +1,11 @@
-#include <array>
+#include <vector>
 #include <algorithm>
 #include <string>
 #include "utils/utils.h"
 #include "config/get_rules.h"
 #include "utils/Roller.h"
 #include "utils/printing/printout.h"
+#include "utils/printing/Formatter.h"
 
 #include "utils/integer_log2.h"
 #include "roll_for_scores.h"
@@ -19,26 +20,31 @@ enum yarb_type {
 using namespace utils::printing;
 using namespace config;
 
-yarb_type check_for_yarborough(const std::array<int,6> &scores);
+yarb_type check_for_yarborough(const std::vector<int> &scores);
 
-void roll_for_scores(std::array<int,6> &characteristic_scores) {
+void roll_for_scores(std::vector<int> &characteristic_scores) {
     std::string response;
-    std::array<int,6> characteristic_rolls;
+    std::vector<int> characteristic_rolls;
     
     while (true) {
         
         printout() << "Rolling characteristics...\n";
+		
+		characteristic_rolls.clear();
         
         for (int i = 0; i < 6; i++) {
-            characteristic_rolls[i] = Roller::roll2d6();
+            characteristic_rolls.push_back(Roller::roll2d6());
         }
         std::sort(characteristic_rolls.begin(), characteristic_rolls.end());
         std::reverse(characteristic_rolls.begin(), characteristic_rolls.end());
         
-        printout() << "Characteristic scores are: " << characteristic_rolls[0] <<
-        ", " << characteristic_rolls[1] << ", " << characteristic_rolls[2] <<
-        ", " << characteristic_rolls[3] << ", " << characteristic_rolls[4] <<
-        ", and " << characteristic_rolls[5] << ".\n";
+		printout() << "Characteristic scores are: ";
+		
+		std::vector<std::string> score_strings;
+		for (const int i : characteristic_rolls) {
+			score_strings.push_back(std::to_string(i));
+		}
+		printout() << CommaList(score_strings);
         
         yarb_type yarb = NO_YARB;
         
@@ -70,31 +76,32 @@ void roll_for_scores(std::array<int,6> &characteristic_scores) {
         
     }
     
-    std::array<bool,6> scores_assigned{};
+    std::vector<bool> scores_assigned(6, false);
     int which_remain = 63;
     
     for (int i = 0; i < 5; i++) {
         
         std::string qstring = "Which characteristic should the " +
-            std::to_string(characteristic_rolls[i]) + " go to?\n(";
+            std::to_string(characteristic_rolls[i]) + " go to? ";
         
+		std::vector<std::string> tabular_prompt;
+		std::string current_entry;
+		
         bool first = true;
         for (int j = 0; j < 6; j++) {
-            std::string supp = "";
-            if (!scores_assigned[j]) {
-                if (!first) qstring = qstring + ", ";
-                qstring = qstring + std::to_string(j) + " for " +
-                    utils::characteristic_abbrev[j];
-                first = false;
-            }
+			if (scores_assigned[j]) current_entry = "   ---";
+			else current_entry = std::string(1, 'a' + j)
+				+ ". " + utils::characteristic_abbrev[j];
+			tabular_prompt.push_back(current_entry);
         }
-        qstring = qstring + ") ";
+		
+		printout() << TabularList(tabular_prompt);
         
         int response_num;
         
         while (true) {
             
-            response_num = utils::get_int_response_in_range(qstring, 0, 5);
+            response_num = utils::get_char_response_in_range(qstring, 'a', 'f') - 'a';
             
             if (scores_assigned[response_num]) {
                 printout() << "That characteristic has already been assigned" <<
@@ -109,15 +116,14 @@ void roll_for_scores(std::array<int,6> &characteristic_scores) {
         
         if (i != 4) {
             first = true;
+			std::vector<std::string> score_report_strings;
             for (int j = 0; j < 6; j++) {
-                if (scores_assigned[j]) {
-                    if (!first) printout() << ", ";
-                    printout() << utils::characteristic_abbrev[j] << " is " <<
-                    characteristic_scores[j];
-                    first = false;
-                }
+                if (scores_assigned[j])
+					score_report_strings.push_back(utils::characteristic_abbrev[j]
+												   + " is "
+												   + std::to_string(characteristic_scores[j]));
             }
-            printout() << ".\n";
+			printout() << CommaList(score_report_strings);
         }
         
     }
@@ -130,7 +136,7 @@ void roll_for_scores(std::array<int,6> &characteristic_scores) {
     display_scores_inline(characteristic_scores);
 }
 
-yarb_type check_for_yarborough(const std::array<int,6> &scores) {
+yarb_type check_for_yarborough(const std::vector<int> &scores) {
     if (scores[1] <= 6) return LOW_MAX; // second-highest is 6 or smaller
     int overall_mod = 0;
     for (int i = 0; i < 6; i++) {

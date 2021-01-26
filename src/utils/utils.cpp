@@ -58,8 +58,8 @@ bool utils::get_bool_response(const std::string& query_string) {
 }
 
 char utils::get_char_response_in_range(const std::string& query_string,
-                                const char& min,
-                                const char& max) {
+									   const char min,
+									   const char max) {
     std::string response;
     char response_char;
     while (true) {

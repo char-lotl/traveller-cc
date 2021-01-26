@@ -5,6 +5,9 @@
 
 namespace utils {
 namespace printing {
+	
+	class Formatter;
+	
     class Printer {
     private:
         Printer() = default;
@@ -17,6 +20,7 @@ namespace printing {
         const Printer& operator<<(const unsigned long& i) const;
         const Printer& operator<<(const long long& i) const;
         const Printer& operator<<(const unsigned long long& i) const;
+		const Printer& operator<<(Formatter const& f) const;
         friend const Printer& printout();
     };
 
