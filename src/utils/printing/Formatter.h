@@ -6,8 +6,8 @@
 namespace utils {
 	namespace printing {
 		
-		int const CONSOLE_WIDTH = 80;
-		int const SPACER_WIDTH = 2;
+		int constexpr CONSOLE_WIDTH = 80;
+		int constexpr SPACER_WIDTH = 2;
 		
 		class Formatter {
 		private:
@@ -27,10 +27,18 @@ namespace utils {
 		};
 		
 		class CommaList : public StringSequentialFormatter {
+		private:
+			std::string const conjunction;
 		public:
 			CommaList(std::vector<std::string> const&);
 		protected:
+			CommaList(std::vector<std::string> const&, std::string const& conjunction);
 			std::string get_formatted_string() const override;
+		};
+		
+		class CommaListAnd : public CommaList {
+		public:
+			CommaListAnd(std::vector<std::string> const&);
 		};
 		
 		class TabularList : public StringSequentialFormatter {
@@ -40,6 +48,10 @@ namespace utils {
 			std::string get_formatted_string() const override;
 		};
 		
+		class HorizontalRule : public Formatter {
+		protected:
+			std::string get_formatted_string() const override;
+		};
 		
 	}
 }

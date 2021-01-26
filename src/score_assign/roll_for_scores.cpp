@@ -24,16 +24,14 @@ yarb_type check_for_yarborough(const std::vector<int> &scores);
 
 void roll_for_scores(std::vector<int> &characteristic_scores) {
     std::string response;
-    std::vector<int> characteristic_rolls;
+    std::vector<int> characteristic_rolls(6);
     
     while (true) {
         
         printout() << "Rolling characteristics...\n";
 		
-		characteristic_rolls.clear();
-        
         for (int i = 0; i < 6; i++) {
-            characteristic_rolls.push_back(Roller::roll2d6());
+            characteristic_rolls[i] = Roller::roll2d6();
         }
         std::sort(characteristic_rolls.begin(), characteristic_rolls.end());
         std::reverse(characteristic_rolls.begin(), characteristic_rolls.end());
@@ -44,7 +42,7 @@ void roll_for_scores(std::vector<int> &characteristic_scores) {
 		for (const int i : characteristic_rolls) {
 			score_strings.push_back(std::to_string(i));
 		}
-		printout() << CommaList(score_strings);
+		printout() << CommaListAnd(score_strings);
         
         yarb_type yarb = NO_YARB;
         

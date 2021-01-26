@@ -11,8 +11,8 @@
 
 using namespace utils::printing;
 
-void display_skills_vertically(const std::vector<skill_type>& skill_vector,
-                               const std::vector<bool>& available);
+void display_skills_tabular(const std::vector<skill_type>& skill_vector,
+							const std::vector<bool>& available);
 
 std::vector<skill_type> pick_skills_from_list(const std::vector<skill_type>& stypes,
 											  int num_skills) {
@@ -27,7 +27,7 @@ std::vector<skill_type> pick_skills_from_list(const std::vector<skill_type>& sty
     
     bool first = true;
     while (num_skills > 0) {
-        display_skills_vertically(stypes, available);
+        display_skills_tabular(stypes, available);
         if (first) first = false;
         else printout() << "Select " << NUMBER_WORDS[num_skills] <<
             " more skill" << ((num_skills > 1) ? "s" : "") << ".\n";
@@ -55,8 +55,8 @@ std::vector<skill_type> pick_skills_from_list(const std::vector<skill_type>& sty
     
 }
 
-void display_skills_vertically(const std::vector<skill_type>& skill_vector,
-                               const std::vector<bool>& available) {
+void display_skills_tabular(const std::vector<skill_type>& skill_vector,
+							const std::vector<bool>& available) {
 	std::vector<std::string> available_skill_strings;
 	
     for (unsigned int i = 0; i < skill_vector.size(); i++) if (available[i]) {

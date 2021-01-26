@@ -238,6 +238,7 @@ using namespace utils::printing;
 //void display_trade_codes_vertically(const std::vector<trade_code>& tcv);
 void display_trade_codes_inline(const std::vector<trade_code>& tcv);
 void display_trade_codes_tabular(const std::vector<trade_code>& tcv);
+std::vector<bool> get_availability_bools(const std::vector<trade_code>& tcv);
 
 Codes select_codes_manually() {
     //return Codes(false);
@@ -245,9 +246,9 @@ Codes select_codes_manually() {
     bool use_sparse_conflicts = get_toggle_rule(rule_type::SPARSE_CODE_CONFLICTS);
     
     Codes available(true);
+	Codes selection(false);
     std::vector<trade_code> available_tcv;
     std::vector<trade_code> selection_tcv;
-    Codes selection(false);
     int response;
     std::string prompt;
     
@@ -321,19 +322,26 @@ Codes select_codes_manually() {
 }
 
 void display_trade_codes_inline(const std::vector<trade_code>& tcv) {
-    bool first = true;
-	std::vector<std::string> code_strings;
+    std::vector<std::string> code_strings;
     for (const trade_code& i : tcv) {
         code_strings.push_back(Codes::TC_STRINGS[i]);
     }
 	printout() << CommaList(code_strings);
-    printout() << ".\n";
 }
 
 void display_trade_codes_tabular(const std::vector<trade_code>& tcv) {
 	std::vector<std::string> strv;
+	std::vector<bool> availability_bool_vec = get_availability_bools(tcv);
+	static const std::vector<std::string> all_code_strings_vector(std::begin(Codes::TC_STRINGS),
+																  std::end(Codes::TC_STRINGS));
 	for (trade_code const& t : tcv) {
 		strv.push_back(std::string(1, 'a' + t) + ". " + Codes::TC_STRINGS[t]);
 	}
 	printout() << TabularList(strv);
+}
+
+std::vector<bool> get_availability_bools(const std::vector<trade_code>& tcv) {
+	std::vector<bool> abv(Codes::TOTAL_TRADE_CODES, false);
+	for (trade_code const& tc : tcv) abv[tc] = true;
+	return abv;
 }

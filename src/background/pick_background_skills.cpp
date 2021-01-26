@@ -7,7 +7,8 @@ class Repertoire;
 #include "skills/skill_type.h"
 #include "utils/utils.h"
 #include "utils/constants.h"
-#include "utils/print_section_break.h"
+#include "utils/printing/printout.h"
+#include "utils/printing/Formatter.h"
 
 #include "pick_background_skills.h"
 #include "planetary/generate_trade_codes.h"
@@ -17,6 +18,7 @@ class Repertoire;
 #include "query_background_skills.h"
 
 using namespace config;
+using namespace utils::printing;
 
 int get_num_background_skills(const std::vector<int>& characteristic_scores);
 
@@ -26,7 +28,7 @@ GenerationVariant gen_variant_from_rules();
 void pick_background_skills(const std::vector<int>& characteristic_scores,
                             Repertoire& rep) {
     
-	utils::print_section_break();
+	printout() << HorizontalRule();
 	
     std::vector<skill_type> homeworld_skills;
     

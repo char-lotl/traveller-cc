@@ -6,7 +6,6 @@ class Repertoire;
 #include "utils/reading/get_file_lines.h"
 #include "utils/printing/printout.h"
 #include "utils/printing/Formatter.h"
-#include "utils/print_section_break.h"
 #include "utils/enumerate_list.h"
 #include "utils/utils.h"
 
@@ -17,7 +16,7 @@ int pick_career_from_list(std::vector<std::string> const& carlist);
 
 void simulate_history(std::vector<int>& cscores, Repertoire& r) {
     
-	utils::print_section_break();
+	printout() << HorizontalRule();
 	
 	int term = 0;
 
