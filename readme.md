@@ -20,7 +20,7 @@ If you're not on a Unix-like, you presumably still generated an executable durin
 
 ## Contributing
 
-Pull requests are welcome, but I can't guarantee you I'll do anything with them. Contact me by email at `lancharlotl@gmail.com` to discuss changes.
+Pull requests are welcome, but I can't guarantee you I'll do anything with them.
 
 ## License
 
